@@ -1,0 +1,13 @@
+app:
+  message: Message has been sent Successfully..
+spring:
+  rabbitmq:
+    host: 10.248.115.186
+    password: guest
+    port: 15672
+    username: guest
+    exchange: s1-pipelined-co-event
+    queue: s1-pipelined-co-event-queue
+    routingkey: com.crif.contact.integrations.s1.event.PipelinedCOS1Event
+server:
+  port: 9091

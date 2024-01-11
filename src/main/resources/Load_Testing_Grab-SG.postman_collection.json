@@ -1,33 +1,22 @@
 {
 	"info": {
-		"_postman_id": "d55232ac-2e94-4369-bf58-6a84938b93ba",
-		"name": "Load_Testing_Grab-SG",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "080be69a-9d34-4b08-9dbb-5b5378b5d535",
+		"name": "local_rmq_mesaaging_testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29964336"
 	},
 	"item": [
 		{
-			"name": "login_admin_user(/auth/login)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.variables.get(\"X-AUTH-TOKEN\");\r",
-							"pm.collectionVariables.set(\"variable_key\", \"variable_value\");\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
+			"name": "List_Of_S1LoadIds(/rabbitmq/topic/producerMessage/s1PipelinedCoEvent?exchangeName=s1-pipelined-co-event&routingKey=com.crif.contact.integrations.s1.event.PipelinedCOS1Event)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"admin\",\r\n    \"password\": \"Spring@123\"\r\n}",
+					"raw": "{\r\n    \"s1LoadId\": [534],\r\n    \"s1RequestId\": \"5e025c53-fa1d-4bf0-bbe4-64276fbbf50f\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -35,397 +24,27 @@
 					}
 				},
 				"url": {
-					"raw": "http://10.248.115.186:3400/contact-back-end/auth/login",
+					"raw": "http://localhost:9091/rabbitmq/topic/producerMessage/s1PipelinedCoEvent?exchangeName=s1-pipelined-co-event&routingKey=com.crif.contact.integrations.s1.event.PipelinedCOS1Event",
 					"protocol": "http",
 					"host": [
-						"10",
-						"248",
-						"115",
-						"186"
+						"localhost"
 					],
-					"port": "3400",
+					"port": "9091",
 					"path": [
-						"contact-back-end",
-						"auth",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "create_debt(/api/debts)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"List of users is here!\", function () {\r",
-							"    // var jsonData = pm.response.json();\r",
-							"    // const details = jsonData.map(data => data);\r",
-							"    // console.log(pm.response.text());\r",
-							"    // console.log(pm.iterationData.get('identiti'))\r",
-							"    // pm.expect(pm.response.text()).to.include(pm.iterationData.get('identiti'));\r",
-							"    // pm.expect(pm.response.text()).to.include(pm.iterationData.get('token_tad'));\r",
-							"    // pm.expect(pm.response.text()).to.include(data.identiti);\r",
-							"    // pm.expect(pm.response.text()).to.include(data.token_tad);\r",
-							"    // pm.environment.set(\"identiti\", details.identiti);\r",
-							"    // pm.environment.set(\"token_tad\", details.token_tad);\r",
-							"    // pm.environment.set(\"debtId\", details.debtId);\r",
-							"    // pm.environment.set(\"personId\", details.personId);\r",
-							"    //postman.setNextRequest('Identiti /api/1.0/etl/load')\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token_tad}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"debtAmount\": 120,\r\n    \"currencyId\": 2,\r\n    \"portfolioId\": 88,\r\n    \"creditTypeCode\": 4,\r\n    \"typeCode\": 3,\r\n    \"lastName\": \"Grab\",\r\n    \"firstName\": \"SG\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{identiti}}/api/debts",
-					"host": [
-						"{{identiti}}"
+						"rabbitmq",
+						"topic",
+						"producerMessage",
+						"s1PipelinedCoEvent"
 					],
-					"path": [
-						"api",
-						"debts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Etl_upload(/api/1.0/etl/load)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"let debtIds = pm.environment.get(\"debtId\");\r",
-							"const debtId = personIds.pop();\r",
-							"pm.environment.set(\"debtId\", debtId);\r",
-							"\r",
-							"console.log(debtId)\r",
-							"if(debtId){\r",
-							"    postman.setNextRequest('Identiti /api/debts/id/components')\r",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token_tad}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "[\r\n    {\r\n        \"languageCode\": \"en\",\r\n        \"id\": \"67499188-PAX\",\r\n        \"lastName\": \"{{lastName}}\",\r\n        \"typeCode\": 0,\r\n        \"stringValue1\": \"PAX\",\r\n        \"stringValue2\": \"platinum\",\r\n        \"phones\": [\r\n            {\r\n                \"phone\": \"60136118945\",\r\n                \"typeCode\": 1\r\n            }\r\n        ],\r\n        \"addresses\": [\r\n            {\r\n                \"fullAddress\": \"MUKIM KUAH KAMPUNG KUAH 07000\",\r\n                \"id\": \"d2b5ca0d95f914ad226e9976a1c82816\",\r\n                \"typeCode\": 800001\r\n            }\r\n        ],\r\n        \"debts\": [\r\n            {\r\n                \"id\": \"67499188#MY-GPL-1-1#PAY_LATER\",\r\n                \"portfolioId\": 1,\r\n                \"creditTypeCode\": 5,\r\n                \"creditName\": \"MY-GPL-1-1\",\r\n                \"currencyCode\": \"MYR\",\r\n                \"debtAmount\": 87.24,\r\n                \"totalAmount\": 0,\r\n                \"dpd\": 606,\r\n                \"regionCode\": 2,\r\n                \"branchCode\": 2,\r\n                \"payments\": [\r\n                    {\r\n                        \"id\": \"ccd0b930a1184d359d86db5cc69aceb0\",\r\n                        \"amount\": 0.75,\r\n                        \"paymentDateTime\": \"2020-05-22T00:16:54Z\",\r\n                        \"currencyCode\": \"MYR\"\r\n                    }\r\n                ],\r\n                \"attributes\": [\r\n                    {\r\n                        \"code\": 600002,\r\n                        \"valueN\": 0\r\n                    },\r\n                    {\r\n                        \"code\": 600021,\r\n                        \"valueN\": 0\r\n                    },\r\n                    {\r\n                        \"code\": 600022,\r\n                        \"valueN\": 0\r\n                    },\r\n                    {\r\n                        \"code\": 600023,\r\n                        \"valueN\": 0\r\n                    },\r\n                    {\r\n                        \"code\": 600024,\r\n                        \"valueN\": 0\r\n                    },\r\n                    {\r\n                        \"code\": 600026,\r\n                        \"valueN\": 0\r\n                    },\r\n                    {\r\n                        \"code\": 600027,\r\n                        \"valueD\": \"2019-06-12T09:00:38.000Z\"\r\n                    },\r\n                    {\r\n                        \"code\": 600028,\r\n                        \"valueD\": \"2019-06-12T09:00:38.000Z\"\r\n                    }\r\n                ],\r\n                \"debtComponents\": [\r\n                    {\r\n                        \"amount\": 77.24,\r\n                        \"currencyCode\": \"MYR\",\r\n                        \"amountTypeCode\": 1\r\n                    },\r\n                    {\r\n                        \"amount\": 0,\r\n                        \"currencyCode\": \"MYR\",\r\n                        \"amountTypeCode\": 7\r\n                    },\r\n                    {\r\n                        \"amount\": 0,\r\n                        \"currencyCode\": \"MYR\",\r\n                        \"amountTypeCode\": 6\r\n                    },\r\n                    {\r\n                        \"amount\": 10,\r\n                        \"currencyCode\": \"MYR\",\r\n                        \"amountTypeCode\": 5\r\n                    }\r\n                ]\r\n            }\r\n        ],\r\n        \"attributes\": [\r\n            {\r\n                \"code\": 700023,\r\n                \"valueN\": 0\r\n            },\r\n            {\r\n                \"code\": 10,\r\n                \"valueN\": -2\r\n            },\r\n            {\r\n                \"code\": 9,\r\n                \"valueN\": 2.10599343585160631234\r\n            },\r\n            {\r\n                \"code\": 700021,\r\n                \"valueN\": 0\r\n            }\r\n        ]\r\n    }\r\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{identiti}}/api/1.0/etl/load",
-					"host": [
-						"{{identiti}}"
-					],
-					"path": [
-						"api",
-						"1.0",
-						"etl",
-						"load"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "addDebtComponent(/api/debts/132285/components)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token_tad}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"typeCode\": -1,\r\n    \"amount\": 200000,\r\n    \"currencyId\": 1,\r\n    \"comment\": \"Testing\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{identiti}}/api/debts/{{extDebtId}}/components",
-					"host": [
-						"{{identiti}}"
-					],
-					"path": [
-						"api",
-						"debts",
-						"{{extDebtId}}",
-						"components"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "add_debt_by_person(/api/persons/144357/debts)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"// pm.test(\"details\", function(){\r",
-							"//     var jsonData = pm.response.json();\r",
-							"//     const details = jsonData.map(data => data);\r",
-							"//     pm.environment.set(\"identiti\", details.identiti);\r",
-							"//     pm.environment.set(\"token_tad\", details.token_tad);\r",
-							"//     pm.environment.set(\"personId\", details.personId);\r",
-							"// });"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token_tad}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"debtAmount\": 120,\r\n    \"currencyId\": 2,\r\n    \"portfolioId\": 88,\r\n    \"creditTypeCode\": 4,\r\n    \"typeCode\": 3,\r\n    \"lastName\": \"Grab\",\r\n    \"firstName\": \"SG\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{identiti}}/api/persons/{{personId}}/debts",
-					"host": [
-						"{{identiti}}"
-					],
-					"path": [
-						"api",
-						"persons",
-						"{{personId}}",
-						"debts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "create_log(/api/public/1.0/contacts)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"// pm.test(\"List of users is here!\", function(){\r",
-							"    // var jsonData = pm.response.json();\r",
-							"    // const details = jsonData.map(data => data);\r",
-							"    // pm.environment.get(\"debtId\");\r",
-							"    // pm.environment.get(\"personId\");\r",
-							"    // pm.environment.get(\"identiti\");\r",
-							"    // pm.environment.get(\"token_tad\");\r",
-							"// });"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token_tad}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"contacts\": [\r\n        {\r\n            \"debtId\": {{extDebtId}},\r\n            \"personId\": {{personId || person}},\r\n            \"personRole\": 1,\r\n            \"contactTypeCode\": 9,\r\n\t\t\t\"phoneId\" : {{phoneId}},\r\n            \"contactDateTime\": \"2022-01-13T14:46:50.000Z\",\r\n            \"resultCode\": 60,\r\n            \"extResultCode\": \"Machine\"\r\n        }\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{identiti}}/api/public/1.0/contacts",
-					"host": [
-						"{{identiti}}"
-					],
-					"path": [
-						"api",
-						"public",
-						"1.0",
-						"contacts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "etl_debt_load(/api/etl/debts)",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token_tad}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
+					"query": [
 						{
-							"key": "file",
-							"type": "file",
-							"src": "/C:/Users/ina082maynara/Desktop/debts.xlsx"
+							"key": "exchangeName",
+							"value": "s1-pipelined-co-event"
+						},
+						{
+							"key": "routingKey",
+							"value": "com.crif.contact.integrations.s1.event.PipelinedCOS1Event"
 						}
-					]
-				},
-				"url": {
-					"raw": "{{identiti}}/api/etl/debts",
-					"host": [
-						"{{identiti}}"
-					],
-					"path": [
-						"api",
-						"etl",
-						"debts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Portfolio_update_info(/api/contractors/25/portfolios/90)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token_tad}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"portfolioCode\": \"1111\",\r\n    \"stageCode\": 2,\r\n    \"typeCode\": 1,\r\n    \"endWorkDate\": \"2022-02-19\",\r\n    \"comment\": \"Testing1\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{identiti}}/api/contractors/25/portfolios/90",
-					"host": [
-						"{{identiti}}"
-					],
-					"path": [
-						"api",
-						"contractors",
-						"25",
-						"portfolios",
-						"90"
 					]
 				}
 			},

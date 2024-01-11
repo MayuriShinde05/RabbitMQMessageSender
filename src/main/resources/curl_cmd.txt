@@ -1,0 +1,6 @@
+curl --location --request GET 'http://localhost:9091/rabbitmq/topic/producerMessage/s1PipelinedCoEvent?exchangeName=s1-pipelined-co-event&routingKey=com.crif.contact.integrations.s1.event.PipelinedCOS1Event' \
+--header 'Content-Type: application/json' \
+--data '{
+    "s1LoadId": [534],
+    "s1RequestId": "5e025c53-fa1d-4bf0-bbe4-64276fbbf50f"
+}'

@@ -1,6 +1,6 @@
 # RabbitMQMessageSender
 
-We have RabbitMQ message sender which project have postman collection as well as what configuration need to be update into the application.properties file.
+We have RabbitMQ message sender which projects have postman collection as well as what configuration needs to be updated into the application.properties file.
 
 #### Application.properties
 Update the below properties
@@ -11,12 +11,15 @@ spring.rabbitmq.username=
 spring.rabbitmq.password=
 spring.rabbitmq.virtual-host=
 
-#### Load_Testing_Grab-SG.postman_collection.json
-This is postman collection file to test
+#### local_rmq_mesaaging_testing.postman_collection.json
+This is a Postman collection file to test
+
+#### curl_cmd.txt
+In this file we also provide the CURL command those user are comfortable with CURL command they used.
 
 #### how to start the customizations-rmq-message.jar
-you have to use below command for this:
+you have to use the below command for this:
 java -Dspring.config.location=<Path_of_properties_file>\application.properties -jar customizations-rmq-message.jar
 
-This is the specific queue/exchange messgae sending project.
-It will give the idea how to send message to the RabbitMQ.
+This is the specific queue/exchange message-sending project.
+It will give the idea of how to send a message to the RabbitMQ.
